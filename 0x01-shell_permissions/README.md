@@ -1,1 +1,1 @@
-Sheel permissions scripts
+Shell permissions scripts
