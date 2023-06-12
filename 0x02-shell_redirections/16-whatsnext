@@ -1,2 +1,2 @@
 #!/bin/bash
-greb -A 3 "root" /ettc/passwd
+grep -A 3 "root" /ettc/passwd
