@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Using for loop to iterate over files in the current directory
+
+for file in *
+do
+    if [ ! -f "$file" ] || [[ "$file" == .* ]] || [[ "$file" != *-* ]]; then
+        continue
+    fi
+    
+    name_after_dash=$(echo "$file" | cut -d'-' -f2-)
+    
+    echo "$name_after_dash"
+done

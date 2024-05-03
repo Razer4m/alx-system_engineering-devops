@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Using while loop to display time from 0:01 to 12:59
+
+hour=0
+
+while [ $hour -le 12 ]
+do
+    minute=1
+    while [ $minute -le 59 ]
+    do
+        printf "%02d:%02d\n" $hour $minute
+        ((minute++))
+    done
+    
+    ((hour++))
+done
