@@ -1,5 +1,5 @@
 #!/bin/env bash
-# Using while loop to display "Best School" 10 times
+# This script is displaying "Best School" 10 times
 
 counter=0
 
