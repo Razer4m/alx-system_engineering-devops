@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Using ps command to display all processes, including those without a TTY, in a user-oriented format with process hierarchy
+
+ps auxf
