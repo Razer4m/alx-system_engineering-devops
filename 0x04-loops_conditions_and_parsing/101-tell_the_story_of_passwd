@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Using while loop to read /etc/passwd line by line
+
+while IFS=: read -r username password uid gid gecos homedir shell
+do
+    fullname=$(echo "$gecos" | cut -d',' -f1)
+
+    echo "The user $username is part of the group $gid gang, lives in $homedir, and rides $shell."
+    echo "User ID's place is protected by the passcode $password, more info about the user here: $uid $fullname"
+done < /etc/passwd
