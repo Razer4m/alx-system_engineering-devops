@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# Path to the manage_my_process script
+
+MANAGE_SCRIPT="/path/to/manage_my_process"
+
+# Function to display usage message
+
+usage() {
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+}
+
+# Check if the script is run as root
+
+if [ "$(id -u)" != "0" ]; then
+    echo "This script must be run as root" >&2
+    exit 1
+fi
+
+# Check if the manage_my_process script exists and is executable
+
+if [ ! -x "$MANAGE_SCRIPT" ]; then
+    echo "Error: $MANAGE_SCRIPT not found or is not executable" >&2
+    exit 1
+fi
+
+# Ensure the correct number of command line arguments are provided
+
+if [ "$#" -ne 1 ]; then
+    usage
+fi
+
+# Main script logic
+
+case "$1" in
+    start)
+        echo "Starting manage_my_process..."
+        "$MANAGE_SCRIPT" &
+        echo "$!" > /var/run/my_process.pid
+        echo "manage_my_process started"
+        ;;
+    stop)
+        echo "Stopping manage_my_process..."
+        if [ -f "/var/run/my_process.pid" ]; then
+            pid=$(cat /var/run/my_process.pid)
+            kill "$pid"
+            rm /var/run/my_process.pid
+            echo "manage_my_process stopped"
+        else
+            echo "manage_my_process is not running"
+        fi
+        ;;
+    restart)
+        echo "Restarting manage_my_process..."
+        if [ -f "/var/run/my_process.pid" ]; then
+            pid=$(cat /var/run/my_process.pid)
+            kill "$pid"
+            rm /var/run/my_process.pid
+        fi
+        "$MANAGE_SCRIPT" &
+        echo "$!" > /var/run/my_process.pid
+        echo "manage_my_process restarted"
+        ;;
+    *)
+        usage
+        ;;
+esac
+
+exit 0
