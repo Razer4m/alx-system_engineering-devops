@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 # Infinite loop to display "To infinity and beyond" with a 2-second pause between each iteration
-#   Displays "I am invincible!!!" in between each iteration.
-
-trap 'echo "I am invincible!!!"; exit 0' SIGTERM
+#   Displays "I am invincible!!!" in between each iteration
 
 while true
 do
     echo "To infinity and beyond"
     sleep 2
+    trap 'echo "I am invincible!!!"' SIGTERM
 done
