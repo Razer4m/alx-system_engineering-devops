@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# This script installs and sets up iload balancing between two web servers
+
+set -e
+
+# Install necessary tools
+apt-get update -y
+apt-get install -y software-properties-common
+
+# Add HAProxy PPA and install HAProxy version 1.8
+add-apt-repository -y ppa:vbernat/haproxy-1.8
+apt-get update -y
+apt-get install -y haproxy=1.8.*
+
+# Enable HAProxy to start on boot
+echo "ENABLED=1" > /etc/default/haproxy
+
+# Configure HAProxy to listen to web1 and web2 servers
+cat <<EOF >> /etc/haproxy/haproxy.cfg
+
+listen load_balancer
+    bind *:80
+    mode http
+    balance roundrobin
+    option httpclose
+    option forwardfor
+    server web-01 54.160.97.159:80 check
+    server web-02 54.237.124.193:80 check
+EOF
+
+
+# Verify HAProxy is running
+if systemctl status haproxy | grep -q "active (running)"; then
+    echo "HAProxy has been successfully installed and configured."
+else
+    echo "HAProxy installation or configuration failed."
+    exit 1
+fi
