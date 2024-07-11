@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Update package list and install nginx if not installed
 rm /etc/nginx/sites-enabled/default
 ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
