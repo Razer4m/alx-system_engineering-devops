@@ -14,7 +14,7 @@ if __name__ == "__main__":
     user_name = user_data.get("username")
 
     # Fetch to-do list
-    todos_data = requests.get(f"{base_url}todos", 
+    todos_data = requests.get(f"{base_url}todos",
                               params={"userId": employee_id}).json()
 
     # Write to JSON file
